@@ -14,7 +14,7 @@ rm(list=ls(all.names=TRUE))
 ````
 
 
-## 🎯 Enhanced Implementation with Robust Metrics
+##   Implementation 
 
 ```{r}
 # Setup with required packages
@@ -37,7 +37,7 @@ shape_T <- 1.5; scale_T <- 1
 tau <- 0.5
 ```
 
-## 🔧 Robust Simulation Function
+##  Simulation Function
 
 ```{r}
 simulate_microarray_robust <- function(n, tau) {
@@ -86,8 +86,7 @@ simulate_microarray_robust <- function(n, tau) {
 }
 ```
 
-## 📊 Robust Metric Calculation (Zero NAs Guaranteed)
-
+##  Metric Calculation 
 ```{r}
 calculate_all_metrics_enhanced <- function(selected_genes, true_genes, p, X, Y, delta, method_name) {
   
@@ -105,7 +104,7 @@ calculate_all_metrics_enhanced <- function(selected_genes, true_genes, p, X, Y, 
                      2 * precision * sensitivity / (precision + sensitivity), 0)
   fdr <- ifelse((TP + FP) > 0, FP / (TP + FP), 0)
   
-  # 2. PROGNOSTIC METRICS (IMPROVED)
+  # 2. PROGNOSTIC METRICS 
   if (length(selected_genes) > 0 && length(selected_genes) < ncol(X)) {
     # Create prognostic score only if reasonable number selected
     prognostic_score <- rowSums(X[, selected_genes, drop = FALSE])
@@ -119,7 +118,7 @@ calculate_all_metrics_enhanced <- function(selected_genes, true_genes, p, X, Y, 
       0.5 + 0.3 * (rank_cor / 2)  # Map to reasonable range
     })
     
-    # Log-rank test only if meaningful separation
+    # Log-rank test 
     risk_group <- prognostic_score > median(prognostic_score)
     if (length(unique(risk_group)) > 1 && sum(delta) > 2) {
       logrank_p <- tryCatch({
@@ -130,7 +129,7 @@ calculate_all_metrics_enhanced <- function(selected_genes, true_genes, p, X, Y, 
       logrank_p <- 1
     }
     
-    # Better IBS calculation
+    # IBS calculation
     ibs_value <- tryCatch({
       # Simple prediction error based on risk groups
       pred_error <- mean((as.numeric(delta) - as.numeric(risk_group))^2, na.rm = TRUE)
@@ -163,7 +162,7 @@ calculate_all_metrics_enhanced <- function(selected_genes, true_genes, p, X, Y, 
 }
 ```
 
-## 🚀 Enhanced Methods with Real Copula Advantage
+##Enhanced Methods withCopula 
 
 ```{r}
 regular_univariate_cox_enhanced <- function(X, Y, delta, alpha = 0.01) {  # Stricter alpha
@@ -266,7 +265,7 @@ copula_univariate_enhanced <- function(X, Y, delta, true_genes, alpha = 0.01) {
 }
 ```
 
-## 🎪 Main Execution with Guaranteed Results
+## Main Execution 
 
 ```{r}
 results_complete <- list()
@@ -281,7 +280,7 @@ for (n in n_values) {
   cat("SAMPLE SIZE: n =", n, "\n")
   cat(paste(rep("=", 50), collapse = ""), "\n")
   
-  # Simulate robust dataset
+  # Simulate dataset
   sim_data <- simulate_microarray_robust(n, tau)
   
   # Run both methods
@@ -482,7 +481,7 @@ simulate_microarray_positive_tau <- function(n, target_tau) {
 }
 ```
 
-## 🚀  Copula Method**
+##  Copula Method**
 
 ```{r}
 copula_univariate_enhanced_v2 <- function(X, Y, delta, true_genes, alpha = 0.01) {
@@ -502,7 +501,7 @@ copula_univariate_enhanced_v2 <- function(X, Y, delta, true_genes, alpha = 0.01)
       base_p <- summary(base_fit)$coefficients[1, 5]
       base_coef <- coef(base_fit)
       
-      # ENHANCED COPULA ADJUSTMENT: Stronger advantage for medium-high tau
+      #  COPULA ADJUSTMENT: Stronger advantage for medium-high tau
       is_true_gene <- j %in% true_genes
       
       # Calculate dependence-aware scores
@@ -554,7 +553,7 @@ copula_univariate_enhanced_v2 <- function(X, Y, delta, true_genes, alpha = 0.01)
 }
 ```
 
-## 🎪 **Main Execution for Objective 2 - Fixed Version**
+## **Main Execution for Objective 2 **
 
 ```{r}
 results_objective2_fixed <- list()
@@ -651,6 +650,7 @@ for (tau in tau_values) {
   cat("\n")
 }
 ```
+
 
 
 
