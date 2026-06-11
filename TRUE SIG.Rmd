@@ -53,9 +53,6 @@ invisible(lapply(pkgs, function(x)
 invisible(lapply(pkgs, library, character.only=TRUE))
 ```
 
-Perfect! You want a **high-dimensional survival simulation** with some genes being truly prognostic (`true signals`) and most genes being noise (`irrelevant genes`). Then we can visualize this as **blue dots (true genes) vs red dots (noise)** in terms of e.g., univariate Cox p-values or LASSO selection strength.
-
-Here’s a **complete R workflow** for this:
 
 ```{r}
 
